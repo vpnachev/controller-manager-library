@@ -30,7 +30,7 @@ func (this *AbstractResource) Create(obj ObjectData) (Object, error) {
 	if o, ok := obj.(Object); ok {
 		obj = o.Data()
 	}
-	if err := this.helper.CheckOType(obj); err != nil {
+	if err := this.CheckOType(obj); err != nil {
 		return nil, err
 	}
 	result, err := this.helper.Internal.I_create(obj)
@@ -44,7 +44,7 @@ func (this *AbstractResource) CreateOrUpdate(obj ObjectData) (Object, error) {
 	if o, ok := obj.(Object); ok {
 		obj = o.Data()
 	}
-	if err := this.helper.CheckOType(obj); err != nil {
+	if err := this.CheckOType(obj); err != nil {
 		return nil, err
 	}
 	result, err := this.helper.Internal.I_create(obj)
@@ -65,7 +65,7 @@ func (this *AbstractResource) Update(obj ObjectData) (Object, error) {
 	if o, ok := obj.(Object); ok {
 		obj = o.Data()
 	}
-	if err := this.helper.CheckOType(obj); err != nil {
+	if err := this.CheckOType(obj); err != nil {
 		return nil, err
 	}
 	result, err := this.helper.Internal.I_update(obj)
@@ -79,7 +79,7 @@ func (this *AbstractResource) Modify(obj ObjectData, modifier Modifier) (ObjectD
 	if o, ok := obj.(Object); ok {
 		obj = o.Data()
 	}
-	if err := this.helper.CheckOType(obj); err != nil {
+	if err := this.CheckOType(obj); err != nil {
 		return nil, false, err
 	}
 	return this.helper.Internal.I_modify(obj, false, false, false, modifier)
@@ -93,7 +93,7 @@ func (this *AbstractResource) ModifyStatus(obj ObjectData, modifier Modifier) (O
 	if o, ok := obj.(Object); ok {
 		obj = o.Data()
 	}
-	if err := this.helper.CheckOType(obj); err != nil {
+	if err := this.CheckOType(obj); err != nil {
 		return nil, false, err
 	}
 	return this.helper.Internal.I_modify(obj, false, false, false, modifier)
@@ -107,7 +107,7 @@ func (this *AbstractResource) Delete(obj ObjectData) error {
 	if o, ok := obj.(Object); ok {
 		obj = o.Data()
 	}
-	if err := this.helper.CheckOType(obj); err != nil {
+	if err := this.CheckOType(obj); err != nil {
 		return err
 	}
 	err := this.helper.Internal.I_delete(obj)
@@ -137,7 +137,7 @@ func (this *AbstractResource) GetInto(name ObjectName, obj ObjectData) (Object, 
 	if o, ok := obj.(Object); ok {
 		obj = o.Data()
 	}
-	if err := this.helper.CheckOType(obj, true); err != nil {
+	if err := this.CheckOType(obj, true); err != nil {
 		return nil, err
 	}
 	return this.helper.Get(name.Namespace(), name.Name(), obj)
@@ -152,7 +152,7 @@ func (this *AbstractResource) Get_(obj interface{}) (Object, error) {
 		}
 		return this.helper.Get("", o, nil)
 	case ObjectData:
-		if err := this.helper.CheckOType(o); err != nil {
+		if err := this.CheckOType(o); err != nil {
 			return nil, err
 		}
 		return this.helper.Get(o.GetNamespace(), o.GetName(), o)
@@ -193,7 +193,7 @@ func (this *namespacedResource) GetInto(name string, obj ObjectData) (ret Object
 	if o, ok := obj.(Object); ok {
 		obj = o.Data()
 	}
-	if err := this.resource.helper.CheckOType(obj); err != nil {
+	if err := this.resource.CheckOType(obj); err != nil {
 		return nil, err
 	}
 	return this.resource.helper.Get(this.namespace, name, obj)
